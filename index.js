@@ -4,7 +4,6 @@ const http = require('http');
 const { Server } = require('socket.io');
 const { Client } = require('pg');
 const rooms = {};
-// const rematchRequests = {};
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
@@ -207,15 +206,11 @@ game.rematchVotes.add(username);
 
   const playersInRoom = Object.values(game.usernames);
   console.log('Players in room:', playersInRoom);
-  console.log('Current rematchRequests:', Array.from(rematchRequests[roomId]));
 
 const allAgreed = playersInRoom.every(name => game.rematchVotes.has(name));
 
   if (allAgreed) {
     console.log('All players agreed for rematch in room', roomId);
-
-    // Reset rematch requests for this room
-    rematchRequests[roomId] = new Set();
 
     startGame(roomId);
   }
@@ -376,6 +371,3 @@ io.to(roomId).emit('gameOver', {
 
 });
 
-server.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
