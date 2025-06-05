@@ -1,0 +1,25 @@
+# Node modules folder (huge, should NOT be pushed)
+node_modules/
+
+# Environment variables file (contains secrets)
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Optional: Editor folders
+.vscode/
+.idea/
+
+# Optional: Build output folder (if you have one)
+dist/
+build/
+
