@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NBA Teammate Game - Playing</title>
+</head>
+<body>
+    <h1>Team: {{ team }}</h1>
+    <h2>Player {{ turn }}'s turn</h2>
+
+    {% if winner %}
+        <h2 style="color:green;">{{ winner }}</h2>
+        <a href="{{ url_for('index') }}">Play Again</a>
+    {% else %}
+        <p>Players named so far:</p>
+        <ul>
+            {% for player in used_players %}
+                <li>{{ player }}</li>
+            {% endfor %}
+        </ul>
+        {% if error %}
+        <p style="color:red;">{{ error }}</p>
+        {% endif %}
+        <form method="post">
+            <input type="text" name="player_name" required placeholder="Name a teammate on {{ team }}">
+            <button type="submit">Submit</button>
+        </form>
+    {% endif %}
+</body>
+</html>

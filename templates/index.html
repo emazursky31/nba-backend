@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NBA Teammate Game - Start</title>
+</head>
+<body>
+    <h1>NBA Teammate Head-to-Head Game</h1>
+    <p>Player 1, enter the name of your first NBA player:</p>
+    {% if error %}
+    <p style="color:red;">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+        <input type="text" name="player_name" required placeholder="Enter NBA Player Name">
+        <button type="submit">Start Game</button>
+    </form>
+</body>
+</html>

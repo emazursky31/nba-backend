@@ -1,0 +1,77 @@
+Table 0 columns: ['PLAYER_ID', 'SEASON_ID', 'LEAGUE_ID', 'TEAM_ID', 'TEAM_ABBREVIATION', 'PLAYER_AGE', 'GP', 'GS', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
+   PLAYER_ID SEASON_ID LEAGUE_ID     TEAM_ID TEAM_ABBREVIATION  PLAYER_AGE  GP  GS   MIN   FGM   FGA  FG_PCT  FG3M  FG3A  FG3_PCT  FTM  FTA  FT_PCT   OREB   DREB   REB  AST    STL    BLK  TOV   PF   PTS
+0      76003   1969-70        00  1610612749               MIL        23.0  82   0  3534   938  1810   0.518   NaN   NaN      NaN  485  743   0.653    NaN    NaN  1190  337    NaN    NaN  NaN  283  2361
+1      76003   1970-71        00  1610612749               MIL        24.0  82  82  3288  1063  1843   0.577   NaN   NaN      NaN  470  681   0.690    NaN    NaN  1311  272    NaN    NaN  NaN  264  2596
+2      76003   1971-72        00  1610612749               MIL        25.0  81  81  3583  1159  2019   0.574   NaN   NaN      NaN  504  732   0.689    NaN    NaN  1346  370    NaN    NaN  NaN  235  2822
+3      76003   1972-73        00  1610612749               MIL        26.0  76  76  3254   982  1772   0.554   NaN   NaN      NaN  328  460   0.713    NaN    NaN  1224  379    NaN    NaN  NaN  208  2292
+4      76003   1973-74        00  1610612749               MIL        27.0  81  81  3548   948  1759   0.539   NaN   NaN      NaN  295  420   0.702  287.0  891.0  1178  386  112.0  283.0  NaN  238  2191
+Table 1 columns: ['PLAYER_ID', 'LEAGUE_ID', 'TEAM_ID', 'GP', 'GS', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
+   PLAYER_ID LEAGUE_ID  TEAM_ID    GP    GS    MIN    FGM    FGA  FG_PCT  FG3M  FG3A  FG3_PCT   FTM   FTA  FT_PCT  OREB  DREB    REB   AST   STL   BLK   TOV    PF    PTS
+0      76003        00        0  1560  1476  57446  15837  28307   0.559     1    18    0.056  6712  9304   0.721  2975  9394  17440  5660  1160  3189  2527  4657  38387
+Table 2 columns: ['PLAYER_ID', 'SEASON_ID', 'LEAGUE_ID', 'TEAM_ID', 'TEAM_ABBREVIATION', 'PLAYER_AGE', 'GP', 'GS', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
+   PLAYER_ID SEASON_ID LEAGUE_ID     TEAM_ID TEAM_ABBREVIATION  PLAYER_AGE  GP  GS  MIN  FGM  FGA  FG_PCT  FG3M  FG3A  FG3_PCT  FTM  FTA  FT_PCT  OREB   DREB  REB  AST   STL   BLK  TOV  PF  PTS
+0      76003   1969-70        00  1610612749               MIL        23.0  10 NaN  435  139  245   0.567   NaN   NaN      NaN   74  101   0.733   NaN    NaN  168   41   NaN   NaN  NaN  25  352
+1      76003   1970-71        00  1610612749               MIL        24.0  14 NaN  577  152  295   0.515   NaN   NaN      NaN   68  101   0.673   NaN    NaN  238   35   NaN   NaN  NaN  45  372
+2      76003   1971-72        00  1610612749               MIL        25.0  11 NaN  510  139  318   0.437   NaN   NaN      NaN   38   54   0.704   NaN    NaN  200   56   NaN   NaN  NaN  35  316
+3      76003   1972-73        00  1610612749               MIL        26.0   6 NaN  276   59  138   0.428   NaN   NaN      NaN   19   35   0.543   NaN    NaN   97   17   NaN   NaN  NaN  26  137
+4      76003   1973-74        00  1610612749               MIL        27.0  16 NaN  758  224  402   0.557   NaN   NaN      NaN   67   91   0.736  67.0  186.0  253   78  20.0  39.0  NaN  41  515
+Table 3 columns: ['PLAYER_ID', 'LEAGUE_ID', 'TEAM_ID', 'GP', 'GS', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
+   PLAYER_ID LEAGUE_ID  TEAM_ID   GP   GS   MIN   FGM   FGA  FG_PCT  FG3M  FG3A  FG3_PCT   FTM   FTA  FT_PCT  OREB  DREB   REB  AST  STL  BLK  TOV   PF   PTS
+0      76003        00        0  237  140  8612  2356  4422   0.533     0     4      0.0  1050  1419    0.74   505  1273  2481  767  189  476  447  797  5762
+Table 4 columns: ['PLAYER_ID', 'SEASON_ID', 'LEAGUE_ID', 'TEAM_ID', 'TEAM_ABBREVIATION', 'PLAYER_AGE', 'GP', 'GS', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
+   PLAYER_ID SEASON_ID LEAGUE_ID     TEAM_ID TEAM_ABBREVIATION  PLAYER_AGE  GP  GS  MIN  FGM  FGA  FG_PCT  FG3M  FG3A  FG3_PCT  FTM  FTA  FT_PCT  OREB  DREB  REB  AST  STL  BLK  TOV  PF  PTS
+0      76003   1969-70        00  1610616833               EST        23.0   1   0   18    4    8   0.500   NaN   NaN      NaN    2    2    1.00   NaN   NaN   11    4  NaN  NaN  NaN   6   10
+1      76003   1970-71        00  1610616834               WST        24.0   1   1   30    8   16   0.500   NaN   NaN      NaN    3    4    0.75   NaN   NaN   14    1  NaN  NaN  NaN   2   19
+2      76003   1971-72        00  1610616834               WST        25.0   1   1   19    5   10   0.500   NaN   NaN      NaN    2    2    1.00   NaN   NaN    7    2  NaN  NaN  NaN   0   12
+3      76003   1973-74        00  1610616834               WST        27.0   1   1   23    7   11   0.636   NaN   NaN      NaN    0    0     NaN   1.0   7.0    8    6  1.0  1.0  NaN   2   14
+4      76003   1974-75        00  1610616834               WST        28.0   1   1   19    3   10   0.300   NaN   NaN      NaN    1    2    0.50   5.0   5.0   10    3  0.0  1.0  NaN   2    7
+Table 5 columns: ['PLAYER_ID', 'LEAGUE_ID', 'TEAM_ID', 'GP', 'GS', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
+   PLAYER_ID LEAGUE_ID  TEAM_ID  GP  GS  MIN  FGM  FGA  FG_PCT  FG3M  FG3A  FG3_PCT  FTM  FTA  FT_PCT  OREB  DREB  REB  AST  STL  BLK  TOV  PF  PTS
+0      76003        00        0  18  13  449  105  213   0.493     0     1      0.0   41   50    0.82    33    84  149   51    6   31   28  57  251
+Table 6 columns: ['PLAYER_ID', 'SEASON_ID', 'LEAGUE_ID', 'ORGANIZATION_ID', 'SCHOOL_NAME', 'PLAYER_AGE', 'GP', 'GS', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
+Empty DataFrame
+Columns: [PLAYER_ID, SEASON_ID, LEAGUE_ID, ORGANIZATION_ID, SCHOOL_NAME, PLAYER_AGE, GP, GS, MIN, FGM, FGA, FG_PCT, FG3M, FG3A, FG3_PCT, FTM, FTA, FT_PCT, OREB, DREB, REB, AST, STL, BLK, TOV, PF, PTS]
+Index: []
+Table 7 columns: ['PLAYER_ID', 'LEAGUE_ID', 'ORGANIZATION_ID', 'GP', 'GS', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
+Empty DataFrame
+Columns: [PLAYER_ID, LEAGUE_ID, ORGANIZATION_ID, GP, GS, MIN, FGM, FGA, FG_PCT, FG3M, FG3A, FG3_PCT, FTM, FTA, FT_PCT, OREB, DREB, REB, AST, STL, BLK, TOV, PF, PTS]
+Index: []
+Table 8 columns: ['PLAYER_ID', 'SEASON_ID', 'LEAGUE_ID', 'TEAM_ID', 'TEAM_ABBREVIATION', 'PLAYER_AGE', 'GP', 'GS', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
+Empty DataFrame
+Columns: [PLAYER_ID, SEASON_ID, LEAGUE_ID, TEAM_ID, TEAM_ABBREVIATION, PLAYER_AGE, GP, GS, MIN, FGM, FGA, FG_PCT, FG3M, FG3A, FG3_PCT, FTM, FTA, FT_PCT, OREB, DREB, REB, AST, STL, BLK, TOV, PF, PTS]
+Index: []
+Table 9 columns: ['PLAYER_ID', 'LEAGUE_ID', 'TEAM_ID', 'GP', 'GS', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
+Empty DataFrame
+Columns: [PLAYER_ID, LEAGUE_ID, TEAM_ID, GP, GS, MIN, FGM, FGA, FG_PCT, FG3M, FG3A, FG3_PCT, FTM, FTA, FT_PCT, OREB, DREB, REB, AST, STL, BLK, TOV, PF, PTS]
+Index: []
+Table 10 columns: ['PLAYER_ID', 'SEASON_ID', 'LEAGUE_ID', 'TEAM_ID', 'TEAM_ABBREVIATION', 'PLAYER_AGE', 'GP', 'GS', 'RANK_MIN', 'RANK_FGM', 'RANK_FGA', 'RANK_FG_PCT', 'RANK_FG3M', 'RANK_FG3A', 'RANK_FG3_PCT', 'RANK_FTM', 'RANK_FTA', 'RANK_FT_PCT', 'RANK_OREB', 'RANK_DREB', 'RANK_REB', 'RANK_AST', 'RANK_STL', 'RANK_BLK', 'RANK_TOV', 'RANK_PTS', 'RANK_EFF']
+   PLAYER_ID SEASON_ID LEAGUE_ID     TEAM_ID TEAM_ABBREVIATION PLAYER_AGE  GP  GS  RANK_MIN  RANK_FGM  ...  RANK_FT_PCT  RANK_OREB  RANK_DREB  RANK_REB RANK_AST  RANK_STL  RANK_BLK  RANK_TOV  RANK_PTS  RANK_EFF
+0      76003   1969-70        00  1610612749               MIL         NR  NR  NR         2         1  ...         81.0        NaN        NaN         3       25       NaN       NaN       NaN         1         1
+1      76003   1970-71        00  1610612749               MIL         NR  NR  NR         8         1  ...         87.0        NaN        NaN         3       45       NaN       NaN       NaN         1         1
+2      76003   1971-72        00  1610612749               MIL         NR  NR  NR         2         1  ...         84.0        NaN        NaN         2       20       NaN       NaN       NaN         1         1
+3      76003   1972-73        00  1610612749               MIL         NR  NR  NR        10         2  ...         67.0        NaN        NaN         5       23       NaN       NaN       NaN         2         1
+4      76003   1973-74        00  1610612749               MIL         NR  NR  NR         2         1  ...         81.0       10.0        3.0         3       17      24.0       2.0       NaN         2         1
+
+[5 rows x 27 columns]
+Table 11 columns: ['PLAYER_ID', 'SEASON_ID', 'LEAGUE_ID', 'TEAM_ID', 'TEAM_ABBREVIATION', 'PLAYER_AGE', 'GP', 'GS', 'RANK_MIN', 'RANK_FGM', 'RANK_FGA', 'RANK_FG_PCT', 'RANK_FG3M', 'RANK_FG3A', 'RANK_FG3_PCT', 'RANK_FTM', 'RANK_FTA', 'RANK_FT_PCT', 'RANK_OREB', 'RANK_DREB', 'RANK_REB', 'RANK_AST', 'RANK_STL', 'RANK_BLK', 'RANK_TOV', 'RANK_PTS', 'RANK_EFF']
+   PLAYER_ID SEASON_ID LEAGUE_ID     TEAM_ID TEAM_ABBREVIATION PLAYER_AGE  GP  GS  RANK_MIN  RANK_FGM  ...  RANK_FT_PCT  RANK_OREB  RANK_DREB  RANK_REB RANK_AST  RANK_STL  RANK_BLK  RANK_TOV  RANK_PTS  RANK_EFF
+0      76003   1969-70        00  1610612749               MIL         NR  NR  NR        11         4  ...           26        NaN        NaN         5       13       NaN       NaN       NaN         4         1
+1      76003   1970-71        00  1610612749               MIL         NR  NR  NR         5         1  ...           35        NaN        NaN         3       17       NaN       NaN       NaN         2         1
+2      76003   1971-72        00  1610612749               MIL         NR  NR  NR        11         2  ...           38        NaN        NaN         2        7       NaN       NaN       NaN         4         1
+3      76003   1972-73        00  1610612749               MIL         NR  NR  NR        29        24  ...           36        NaN        NaN        11       36       NaN       NaN       NaN        26         1
+4      76003   1973-74        00  1610612749               MIL         NR  NR  NR         4         1  ...           25        1.0        1.0         1        4       6.0       1.0       NaN         1         1
+
+[5 rows x 27 columns]
+Table 12 columns: ['PLAYER_ID', 'GAME_DATE', 'VS_TEAM_ID', 'VS_TEAM_CITY', 'VS_TEAM_NAME', 'VS_TEAM_ABBREVIATION', 'STAT', 'STATS_VALUE', 'STAT_ORDER', 'DATE_EST']
+   PLAYER_ID GAME_DATE  VS_TEAM_ID VS_TEAM_CITY VS_TEAM_NAME VS_TEAM_ABBREVIATION STAT  STATS_VALUE  STAT_ORDER DATE_EST
+0      76003                     0                                                                0           0         
+Table 13 columns: ['PLAYER_ID', 'GAME_ID', 'GAME_DATE', 'VS_TEAM_ID', 'VS_TEAM_CITY', 'VS_TEAM_NAME', 'VS_TEAM_ABBREVIATION', 'STAT', 'STAT_VALUE', 'STAT_ORDER', 'DATE_EST']
+   PLAYER_ID     GAME_ID    GAME_DATE  VS_TEAM_ID  VS_TEAM_CITY   VS_TEAM_NAME VS_TEAM_ABBREVIATION  STAT  STAT_VALUE  STAT_ORDER             DATE_EST
+0      76003  0046900235  APR 03 1970  1610612755  Philadelphia          76ers                  PHL   PTS          46           1  1970-04-03T00:00:00
+1      76003  0047600227  MAY 04 1977  1610612744  Golden State       Warriors                  GOS   REB          26           2  1977-05-04T00:00:00
+2      76003  0048400224  MAY 05 1985  1610612757      Portland  Trail Blazers                  POR  OREB           9           3  1985-05-05T00:00:00
+3      76003  0047600227  MAY 04 1977  1610612744  Golden State       Warriors                  GOS  DREB          18           4  1977-05-04T00:00:00
+4      76003  0046903001  APR 13 1970  1610612752      New York         Knicks                  NYK   AST          11           5  1970-04-13T00:00:00
+Table 14 columns: ['GAME_ID', 'GAME_DATE', 'GAME_TIME', 'PLAYER_TEAM_ID', 'PLAYER_TEAM_CITY', 'PLAYER_TEAM_NICKNAME', 'PLAYER_TEAM_ABBREVIATION', 'VS_TEAM_ID', 'VS_TEAM_CITY', 'VS_TEAM_NICKNAME', 'VS_TEAM_ABBREVIATION']
+  GAME_ID GAME_DATE GAME_TIME  PLAYER_TEAM_ID PLAYER_TEAM_CITY PLAYER_TEAM_NICKNAME PLAYER_TEAM_ABBREVIATION  VS_TEAM_ID VS_TEAM_CITY VS_TEAM_NICKNAME VS_TEAM_ABBREVIATION
+0                                           0   

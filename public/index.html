@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NBA Teammate Game</title>
+  <script src="https://cdn.socket.io/4.6.1/socket.io.min.js" crossorigin="anonymous"></script>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 1rem; }
+    #messages { border: 1px solid #ccc; padding: 1rem; height: 25px; overflow-y: auto; list-style-type: none; }
+    #timer { font-size: 2rem; margin: 1rem 0; }
+    #guessInput { width: 100%; padding: 0.5rem; font-size: 1rem; }
+    #autocomplete-list { border: 1px solid #ccc; max-height: 120px; overflow-y: auto; position: absolute; background: white; width: calc(100% - 1rem); z-index: 1000; }
+    #autocomplete-list div { padding: 0.5rem; cursor: pointer; }
+    #autocomplete-list div:hover { background: #ddd; }
+    #successful-guesses-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 0.5rem;
+      text-align:center;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>NBA Teammate Game</h1>
+  <div>
+    <label>Username: <input type="text" id="usernameInput" /></label>
+  </div>
+
+  <div>
+    <label>Room ID: <input type="text" id="roomIdInput" value="room1" /></label>
+    <button id="joinBtn">Join Game</button>
+  </div>
+
+  <div id="status"></div>
+
+  <div id="waitingRoom" style="display: none; text-align: center; margin-top: 2rem;">
+    <h2>Waiting Room</h2>
+    <p>Waiting for another player to join...</p>
+    <p>Share this Room ID with your opponent:</p>
+    <code id="displayRoomCode" style="font-size: 1.5rem; font-weight: bold;"></code>
+  </div>
+
+  <div id="gameArea" style="display:none; position: relative;">
+    <div id="turnSection">
+      <p>Name any teammate of: <strong id="currentPlayerName"></strong></p>
+      <p>Time left: <span id="timer">15</span> seconds</p>
+
+      <input
+        type="text"
+        id="guessInput"
+        placeholder="Type a teammate's name..."
+        autocomplete="off"
+      />
+      <div id="autocomplete-list"></div>
+
+      <button id="submitGuessBtn" disabled>Submit Guess</button>
+    </div>
+
+    <ul id="messages"></ul>
+
+    <div id="gameOverContainer"></div>
+
+    <button id="rematchBtn" style="display: none;">Rematch</button>
+
+    <div id="successful-guesses-container" style="margin-top: 2px;">
+      <h3>Turn History</h3>
+      <ul id="successful-guesses-list"></ul>
+    </div>
+  </div>
+
+<script>
+  const socket = io('http://localhost:3000');
+
+  let roomId = null;
+  let selectedPlayer = null;
+  let fetchTimeout = null;
+  let gameStarted = false;
+  let gameOver = false;
+
+  const statusDiv = document.getElementById('status');
+  const joinBtn = document.getElementById('joinBtn');
+  const roomIdInput = document.getElementById('roomIdInput');
+
+  const waitingRoom = document.getElementById('waitingRoom');
+  const gameArea = document.getElementById('gameArea');
+  const currentPlayerNameEl = document.getElementById('currentPlayerName');
+  const timerEl = document.getElementById('timer');
+  const guessInput = document.getElementById('guessInput');
+  const submitGuessBtn = document.getElementById('submitGuessBtn');
+  const messagesEl = document.getElementById('messages');
+  const autocompleteList = document.getElementById('autocomplete-list');
+  const rematchBtn = document.getElementById('rematchBtn');
+
+  const initialPlayer = "LeBron James";
+  const successfulGuesses = [];
+
+  joinBtn.onclick = () => {
+    const username = document.getElementById('usernameInput').value.trim();
+    roomId = roomIdInput.value.trim();
+
+    if (!username) {
+      alert('Enter a username');
+      return;
+    }
+
+    if (!roomId) {
+      alert('Enter a room ID');
+      return;
+    }
+
+    socket.emit('joinGame', { roomId, username });
+    statusDiv.textContent = `Joined room: ${roomId}`;
+    document.getElementById('displayRoomCode').textContent = roomId;
+    waitingRoom.style.display = 'block';
+    gameArea.style.display = 'none';
+  };
+
+  socket.on('connect', () => {
+    // Connected
+  });
+
+  socket.on('playersUpdate', (count) => {
+    statusDiv.textContent = `Players in room: ${count}`;
+    
+    if (count < 2) {
+      waitingRoom.style.display = 'block';
+      gameArea.style.display = 'none';
+      rematchBtn.style.display = 'none';  // hide rematch if waiting
+    } else {
+      waitingRoom.style.display = 'none';
+      gameArea.style.display = 'block';
+    }
+  });
+
+  socket.on('gameStarted', (data) => {
+    gameStarted = true;
+    gameOver = false;
+
+    if (window.timerInterval) {
+      clearInterval(window.timerInterval);
+      window.timerInterval = null;
+    }
+
+    
+    guessInput.disabled = false;
+    submitGuessBtn.disabled = false;
+
+    rematchBtn.style.display = 'none';
+    rematchBtn.disabled = false;
+    rematchBtn.textContent = 'Rematch';
+
+    joinBtn.classList.add('hidden');
+    roomIdInput.disabled = true;
+
+    guessInput.value = '';
+    selectedPlayer = null;
+    clearGuessError();
+    clearAutocomplete();
+
+    messagesEl.innerHTML = '';
+    successfulGuesses.length = 0;
+    renderSuccessfulGuesses();
+
+    currentPlayerNameEl.textContent = data.currentPlayerName;
+    timerEl.textContent = data.timeLeft;
+
+    gameArea.style.display = 'block';
+    document.getElementById('turnSection').style.display = 'block';
+    messagesEl.style.display = 'block';
+    document.getElementById('gameOverContainer').innerHTML = '';
+  });
+
+  socket.on('turnEnded', (data) => {
+    clearGuessError();
+
+    if (data.successfulGuess) {
+      const match = data.successfulGuess.match(/"([^"]+)"/);
+      const playerName = match ? match[1] : data.successfulGuess;
+      successfulGuesses.unshift(playerName);
+      renderSuccessfulGuesses();
+    } else if (data.message && data.message.startsWith('Incorrect guess')) {
+      showGuessError(data.message);
+    }
+
+    if (data.message && !data.message.startsWith('Incorrect guess')) {
+      addMessage(data.message);
+    }
+
+    updateTurn(data);
+  });
+
+  socket.on('timerTick', (data) => {
+    timerEl.textContent = data.timeLeft;
+  });
+
+ socket.on('gameOver', (data) => {
+  gameOver = true;
+
+  // Disable guess controls
+  guessInput.disabled = true;
+  submitGuessBtn.disabled = true;
+
+  // Clear timer if running
+  if (window.timerInterval) {
+    clearInterval(window.timerInterval);
+    window.timerInterval = null;
+  }
+
+  // Hide gameplay UI
+  document.getElementById('turnSection').style.display = 'none';
+  messagesEl.style.display = 'none';
+
+  // Show Game Over message
+  const container = document.getElementById('gameOverContainer');
+  container.innerHTML = '';
+
+  const gameOverMsg = document.createElement('div');
+  gameOverMsg.textContent = data.message || 'Game Over!';
+  gameOverMsg.style.fontSize = '1.5rem';
+  gameOverMsg.style.color = 'darkred';
+  gameOverMsg.style.textAlign = 'center';
+  gameOverMsg.style.fontWeight = 'bold';
+  gameOverMsg.style.marginTop = '1rem';
+
+  container.appendChild(gameOverMsg);
+
+  // Show Rematch button
+  rematchBtn.style.display = 'inline-block';
+  rematchBtn.disabled = false;
+  rematchBtn.textContent = 'Rematch';
+});
+
+
+  socket.on('rematchRequested', ({ username }) => {
+    console.log(`${username} requested a rematch`);
+    addMessage(`${username} wants a rematch!`);
+  });
+
+  socket.on('message', (msg) => {
+    messagesEl.textContent = msg; // replaces previous
+  });
+
+  // Autocomplete logic
+  guessInput.addEventListener('input', function() {
+    const val = this.value.trim();
+    clearAutocomplete();
+    selectedPlayer = null;
+    submitGuessBtn.disabled = true;
+
+    if (!val) return;
+
+    if (fetchTimeout) clearTimeout(fetchTimeout);
+
+    fetchTimeout = setTimeout(async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/players?q=${encodeURIComponent(val)}`);
+        if (!res.ok) throw new Error('Network response not ok');
+
+        const results = await res.json();
+        if (results.length === 0) return;
+
+        results.forEach(player => {
+          const name = player.player_name;
+          const idx = name.toLowerCase().indexOf(val.toLowerCase());
+          if (idx === -1) return;
+
+          const beforeMatch = name.slice(0, idx);
+          const matchText = name.slice(idx, idx + val.length);
+          const afterMatch = name.slice(idx + val.length);
+
+          const item = document.createElement('div');
+          item.innerHTML = `${beforeMatch}<strong>${matchText}</strong>${afterMatch}`;
+          item.addEventListener('click', () => {
+            guessInput.value = player.player_name;
+            selectedPlayer = player.player_name;
+            clearAutocomplete();
+            submitGuessBtn.disabled = false;
+          });
+          autocompleteList.appendChild(item);
+        });
+      } catch (err) {
+        console.error('Autocomplete fetch error:', err);
+      }
+    }, 300);
+  });
+
+  guessInput.addEventListener('change', () => {
+    if (guessInput.value !== selectedPlayer) {
+      selectedPlayer = null;
+      submitGuessBtn.disabled = true;
+    }
+  });
+
+  submitGuessBtn.onclick = () => {
+    const guess = guessInput.value.trim();
+    clearGuessError();
+
+    if (!guess) {
+      showGuessError('Enter a guess');
+      return;
+    }
+    if (guess !== selectedPlayer) {
+      showGuessError('Please select a player from the dropdown list.');
+      return;
+    }
+
+    socket.emit('playerGuess', { roomId, guess });
+    guessInput.value = '';
+    selectedPlayer = null;
+    submitGuessBtn.disabled = true;
+    clearAutocomplete();
+  };
+
+  rematchBtn.onclick = () => {
+    if (!roomId) return;
+    socket.emit('requestRematch', { roomId });
+    rematchBtn.disabled = true;
+    rematchBtn.textContent = 'Waiting for opponent...';
+  };
+
+  function showGuessError(msg) {
+    clearGuessError();
+
+    const errorDiv = document.createElement('div');
+    errorDiv.textContent = msg;
+    errorDiv.style.color = 'red';
+    errorDiv.style.marginTop = '0.5rem';
+    errorDiv.classList.add('guess-error-msg');
+
+    submitGuessBtn.insertAdjacentElement('afterend', errorDiv);
+  }
+
+  function clearGuessError() {
+    const existing = document.querySelector('.guess-error-msg');
+    if (existing) existing.remove();
+  }
+
+  function updateTurn(data) {
+    currentPlayerNameEl.textContent = data.currentPlayerName || '???';
+    timerEl.textContent = data.timeLeft || 15;
+  }
+
+  function addMessage(msg) {
+    const li = document.createElement('li');
+    li.textContent = msg;
+    messagesEl.appendChild(li);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function clearAutocomplete() {
+    autocompleteList.innerHTML = '';
+  }
+
+  function renderSuccessfulGuesses() {
+    const listEl = document.getElementById('successful-guesses-list');
+    listEl.innerHTML = '';
+
+    const displayList = [...successfulGuesses, initialPlayer];
+
+    displayList.forEach((guess, index) => {
+      const li = document.createElement('li');
+      li.style.margin = '0.5rem 0';
+      li.style.fontWeight = (index === displayList.length - 1) ? 'bold' : 'normal';
+      li.textContent = guess;
+      listEl.appendChild(li);
+
+      if (index < displayList.length - 1) {
+        const arrow = document.createElement('div');
+        arrow.style.textAlign = 'center';
+        arrow.style.fontSize = '1.2rem';
+        arrow.style.color = '#888';
+        arrow.textContent = '↓';
+        listEl.appendChild(arrow);
+      }
+    });
+  }
+</script>
+</body>
+</html>
