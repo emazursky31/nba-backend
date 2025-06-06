@@ -70,7 +70,7 @@
   </div>
 
 <script>
-  const socket = io('http://localhost:3000');
+  const socket = io('https://nba-head2head-b939251199b3.herokuapp.com/');
 
   let roomId = null;
   let selectedPlayer = null;
@@ -254,7 +254,7 @@
 
     fetchTimeout = setTimeout(async () => {
       try {
-        const res = await fetch(`http://localhost:3000/players?q=${encodeURIComponent(val)}`);
+        const res = await fetch(`https://nba-head2head-b939251199b3.herokuapp.com/players?q=${encodeURIComponent(val)}`);
         if (!res.ok) throw new Error('Network response not ok');
 
         const results = await res.json();

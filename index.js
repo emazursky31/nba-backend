@@ -1,12 +1,30 @@
 require('dotenv').config();
 const express = require('express');
 const http = require('http');
+const cors = require('cors'); // <-- Add this
 const { Server } = require('socket.io');
 const { Client } = require('pg');
+
 const rooms = {};
+
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+
+// ✅ Add CORS support for both Express and Socket.IO
+const FRONTEND_ORIGIN = 'https://nba-teammate-game-8qek1pc0y-evan-mazurskys-projects.vercel.app';
+
+const io = new Server(server, {
+  cors: {
+    origin: FRONTEND_ORIGIN,
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+});
+
+app.use(cors({
+  origin: FRONTEND_ORIGIN,
+  credentials: true,
+}));
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
@@ -39,6 +57,7 @@ app.get('/players', async (req, res) => {
   if (!input) {
     return res.json([]);
   }
+
 
   const names = input.split(/\s+/);
 
