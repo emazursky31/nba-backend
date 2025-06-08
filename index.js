@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 
 // ✅ Add CORS support for both Express and Socket.IO
-const FRONTEND_ORIGIN = 'https://nba-teammate-game-8qek1pc0y-evan-mazurskys-projects.vercel.app';
+const FRONTEND_ORIGIN = 'https://nba-teammate-game.vercel.app';
 
 const io = new Server(server, {
   cors: {
