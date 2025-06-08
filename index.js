@@ -118,42 +118,41 @@ const games = {}; // Assuming this is your existing game tracking
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
-  // Player joins a game room
-  socket.on('joinGame', ({ roomId, username }) => {
-    socket.join(roomId);
-    console.log(`User ${username} (${socket.id}) joined room ${roomId}`);
+// Player joins a game room
+socket.on('joinGame', ({ roomId, username }) => {
+  socket.join(roomId);
+  console.log(`User ${username} (${socket.id}) joined room ${roomId}`);
 
-    // Initialize game if room doesn't exist
-    if (!games[roomId]) {
-      games[roomId] = {
-  players: [],
-  usernames: {},
-  currentTurn: 0,
-  currentPlayerName: null,
-  timer: null,
-  timeLeft: 15,
-  teammates: [],
-  successfulGuesses: [],
-  rematchVotes: new Set(), // ✅ NEW
-};
+  // Initialize game if room doesn't exist
+  if (!games[roomId]) {
+    games[roomId] = {
+      players: [],
+      usernames: {},
+      currentTurn: 0,
+      currentPlayerName: null,
+      timer: null,
+      timeLeft: 15,
+      teammates: [],
+      successfulGuesses: [],
+      rematchVotes: new Set(),
+    };
+  }
 
-    }
+  const game = games[roomId];
 
-    const game = games[roomId];
+  if (!game.players.includes(socket.id)) {
+    game.players.push(socket.id);
+    game.usernames[socket.id] = username;
+  }
 
-    // Add player if not already in
-    if (!game.players.includes(socket.id)) {
-      game.players.push(socket.id);
-      game.usernames[socket.id] = username;
-    }
+  io.to(roomId).emit('playersUpdate', game.players.length);
 
-    io.to(roomId).emit('playersUpdate', game.players.length);
+  // ✅ START GAME when 2 players are in
+  if (game.players.length === 2) {
+    startGame(roomId);
+  }
+});
 
-    // Start the game when 2 players are present
-    if (game.players.length === 2) {
-      startGame(roomId);
-    }
-  });
 
   // Handle player guess
   socket.on('playerGuess', async ({ roomId, guess }) => {
