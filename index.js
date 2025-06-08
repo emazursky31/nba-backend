@@ -316,32 +316,44 @@ async function getTeammates(playerName) {
 }
 
 
-
-
 // Starts the game in a room: picks random first player & teammates
 async function startGame(roomId) {
-  console.log(`✅ startGame() called for room ${roomId}`);
-
   const game = games[roomId];
   if (!game) {
     console.log('❌ No game object found');
     return;
   }
 
-  game.rematchVotes = new Set();  // <-- Reset here, after game is defined
-
+  game.rematchVotes = new Set();  // Reset rematch state
   if (game.timer) clearInterval(game.timer);
-
   game.successfulGuesses = [];
   game.timeLeft = 15;
 
   const startIndex = Math.floor(Math.random() * game.players.length);
   game.currentTurn = startIndex;
 
-  game.currentPlayerName = 'LeBron James'; // Replace later
+  // STEP 1: Pick a valid starting player
+  game.currentPlayerName = await getRandomPlayer(); // You will update this function
   game.leadoffPlayer = game.currentPlayerName;
   game.teammates = await getTeammates(game.currentPlayerName);
 
+  // STEP 2: Check if teammates exist
+  if (!game.teammates || game.teammates.length === 0) {
+    io.to(roomId).emit('gameOver', {
+      message: `No teammates found for ${game.currentPlayerName}. Game cannot proceed.`,
+    });
+    delete games[roomId];
+    return;
+  }
+
+  // Log for debugging
+  console.log(`[STARTGAME] room ${roomId} starting with:`);
+  console.log(`→ currentPlayerName: ${game.currentPlayerName}`);
+  console.log(`→ teammates: ${game.teammates}`);
+  console.log(`→ players: ${game.players}`);
+  console.log(`→ currentTurn: ${game.currentTurn}`);
+
+  // STEP 3: Emit and start game
   io.to(roomId).emit('gameStarted', {
     firstPlayerId: game.players[startIndex],
     currentPlayerName: game.currentPlayerName,
@@ -350,6 +362,35 @@ async function startGame(roomId) {
 
   startTurnTimer(roomId);
 }
+
+
+async function getRandomPlayer() {
+  const query = `
+    WITH player_seasons AS (
+      SELECT
+        player_id,
+        generate_series(CAST(start_season AS INT), CAST(end_season AS INT)) AS season
+      FROM player_team_stints
+      WHERE start_season >= '2000'
+    )
+    SELECT p.player_name
+    FROM players p
+    JOIN (
+      SELECT player_id
+      FROM player_seasons
+      GROUP BY player_id
+      HAVING COUNT(DISTINCT season) >= 10
+    ) ps ON p.player_id = ps.player_id
+    ORDER BY RANDOM()
+    LIMIT 1;
+  `;
+
+  const res = await client.query(query);
+  return res.rows[0]?.player_name || null;
+}
+
+
+
 
 
 // Starts the 15-second countdown timer for a turn

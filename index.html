@@ -91,8 +91,6 @@
   const messagesEl = document.getElementById('messages');
   const autocompleteList = document.getElementById('autocomplete-list');
   const rematchBtn = document.getElementById('rematchBtn');
-
-  const initialPlayer = "LeBron James";
   const successfulGuesses = [];
 
   joinBtn.onclick = () => {
@@ -356,7 +354,7 @@
     const listEl = document.getElementById('successful-guesses-list');
     listEl.innerHTML = '';
 
-    const displayList = [...successfulGuesses, initialPlayer];
+    const displayList = [...successfulGuesses];
 
     displayList.forEach((guess, index) => {
       const li = document.createElement('li');
